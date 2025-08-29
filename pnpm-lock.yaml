@@ -61,7 +61,7 @@ importers:
         specifier: ^29.5.4
         version: 29.5.14
       '@types/node':
-        specifier: ^20.5.0
+        specifier: ^20.19.11
         version: 20.19.11
       '@types/supertest':
         specifier: ^2.0.12
@@ -1295,8 +1295,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  cookie@0.7.1:
-    resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
+  cookie@0.7.2:
+    resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
 
   cookiejar@2.1.4:
@@ -2489,8 +2489,8 @@ packages:
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
 
-  qs@6.13.0:
-    resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
+  qs@6.14.0:
+    resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
     engines: {node: '>=0.6'}
 
   queue-microtask@1.2.3:
@@ -4612,7 +4612,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cookie@0.7.1: {}
+  cookie@0.7.2: {}
 
   cookiejar@2.1.4: {}
 
@@ -5008,7 +5008,7 @@ snapshots:
       '@paralleldrive/cuid2': 2.2.2
       dezalgo: 1.0.4
       once: 1.4.0
-      qs: 6.13.0
+      qs: 6.14.0
 
   forwarded@0.2.0: {}
 
@@ -5625,7 +5625,7 @@ snapshots:
 
   light-my-request@5.14.0:
     dependencies:
-      cookie: 0.7.1
+      cookie: 0.7.2
       process-warning: 3.0.0
       set-cookie-parser: 2.7.1
 
@@ -6002,7 +6002,7 @@ snapshots:
 
   pure-rand@6.1.0: {}
 
-  qs@6.13.0:
+  qs@6.14.0:
     dependencies:
       side-channel: 1.1.0
 
@@ -6293,7 +6293,7 @@ snapshots:
       formidable: 2.1.5
       methods: 1.1.2
       mime: 2.6.0
-      qs: 6.13.0
+      qs: 6.14.0
       semver: 7.7.2
     transitivePeerDependencies:
       - supports-color

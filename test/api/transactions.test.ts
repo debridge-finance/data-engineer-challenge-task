@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongoClient, ObjectId } from 'mongodb';
 import { createApp } from '../../src/api';
-import { setupTestDatabase, teardownTestDatabase } from '../setup';
+import { clearTestData, setupTestDatabase, teardownTestDatabase } from '../setup';
 import { DatabaseConfig } from '../../src/config/database';
 import { EnrichedTransaction } from '../../src/models/transaction';
 

@@ -43,7 +43,7 @@
   "devDependencies": {
     "@temporalio/testing": "^1.8.4",
     "@types/jest": "^29.5.4",
-    "@types/node": "^20.5.0",
+    "@types/node": "^20.19.11",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^6.4.0",

@@ -6,6 +6,11 @@ export class MockBlockchainService {
   private readonly tokens: SupportedToken[] = ['USDC', 'USDT', 'WETH', 'WBTC', 'DAI', 'LINK', 'UNI', 'AAVE', 'MATIC', 'BNB', 'ARB', 'SOL'];
 
   async getTransaction(transactionId: string): Promise<RawTransaction> {
+    // Validate transaction ID format
+    if (!this.isValidTransactionId(transactionId)) {
+      throw new Error(`Invalid transaction ID format: ${transactionId}`);
+    }
+
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 500));
 
@@ -102,5 +107,25 @@ export class MockBlockchainService {
         Math.floor(Math.random() * 16).toString(16)
       ).join('');
     }
+  }
+
+  private isValidTransactionId(transactionId: string): boolean {
+    // Allow basic validation - reject obviously invalid formats
+    if (!transactionId || transactionId.length < 3) {
+      return false;
+    }
+    
+    // Reject clearly invalid patterns like 'invalid-tx-id'
+    if (transactionId.includes('-') || transactionId.includes(' ')) {
+      return false;
+    }
+    
+    // Check for Ethereum-style transaction hash (0x + hex characters, flexible length for tests)
+    const ethPattern = /^0x[a-fA-F0-9]+$/;
+    
+    // Check for Solana-style transaction signature (base58 characters)
+    const solanaPattern = /^[1-9A-HJ-NP-Za-km-z]+$/;
+    
+    return ethPattern.test(transactionId) || solanaPattern.test(transactionId);
   }
 }

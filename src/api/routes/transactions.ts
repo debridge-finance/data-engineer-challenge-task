@@ -1,11 +1,11 @@
-import { Router, Request, Response } from 'express';
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { DatabaseConfig } from '../../config/database';
 import { TransactionQuery, PaginatedResponse, ApiResponse } from '../../models/api';
 import { EnrichedTransaction } from '../../models/transaction';
 import { logger } from '../../utils/logger';
 import Joi from 'joi';
 
-const router = Router();
+export default async function transactionsRoutes(fastify: FastifyInstance) {
 
 const transactionQuerySchema = Joi.object({
   status: Joi.string().valid('pending', 'completed', 'failed').optional(),
@@ -18,11 +18,11 @@ const transactionQuerySchema = Joi.object({
   endDate: Joi.string().isoDate().optional()
 });
 
-router.get('/', async (req: Request, res: Response) => {
+  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
   try {
-    const { error, value } = transactionQuerySchema.validate(req.query);
+    const { error, value } = transactionQuerySchema.validate(request.query);
     if (error) {
-      return res.status(400).json({
+      return reply.status(400).send({
         success: false,
         error: error.details[0].message,
         timestamp: Date.now()
@@ -83,15 +83,15 @@ router.get('/', async (req: Request, res: Response) => {
     ];
 
     const total = 1250; // TODO: Get actual count from MongoDB
-    const hasNext = query.offset + query.limit < total;
-    const hasPrev = query.offset > 0;
+    const hasNext = (query.offset || 0) + (query.limit || 10) < total;
+    const hasPrev = (query.offset || 0) > 0;
 
     const response: PaginatedResponse<EnrichedTransaction> = {
       success: true,
       data: mockTransactions,
       pagination: {
-        page: Math.floor(query.offset / query.limit) + 1,
-        limit: query.limit,
+        page: Math.floor((query.offset || 0) / (query.limit || 10)) + 1,
+        limit: query.limit || 10,
         total,
         hasNext,
         hasPrev
@@ -99,11 +99,11 @@ router.get('/', async (req: Request, res: Response) => {
       timestamp: Date.now()
     };
 
-    res.json(response);
+    reply.send(response);
 
   } catch (error) {
     logger.error('Failed to get transactions:', error);
-    res.status(500).json({
+    reply.status(500).send({
       success: false,
       error: 'Internal server error',
       timestamp: Date.now()
@@ -111,9 +111,9 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/:hash', async (req: Request, res: Response) => {
+  fastify.get('/:hash', async (request: FastifyRequest<{Params: {hash: string}}>, reply: FastifyReply) => {
   try {
-    const { hash } = req.params;
+    const { hash } = request.params;
     
     // TODO: Implement single transaction lookup
     // This endpoint should:
@@ -126,25 +126,25 @@ router.get('/:hash', async (req: Request, res: Response) => {
     const collection = db.collection('enrichedTransactions');
     
     // TODO: Implement actual lookup
-    const transaction = await collection.findOne({ _id: hash });
+    const transaction = await collection.findOne({ hash: hash });
     
     if (!transaction) {
-      return res.status(404).json({
+      return reply.status(404).send({
         success: false,
         error: 'Transaction not found',
         timestamp: Date.now()
       } as ApiResponse<null>);
     }
 
-    res.json({
+    reply.send({
       success: true,
-      data: transaction,
+      data: transaction as unknown as EnrichedTransaction,
       timestamp: Date.now()
     } as ApiResponse<EnrichedTransaction>);
 
   } catch (error) {
-    logger.error(`Failed to get transaction ${req.params.hash}:`, error);
-    res.status(500).json({
+    logger.error(`Failed to get transaction ${request.params.hash}:`, error);
+    reply.status(500).send({
       success: false,
       error: 'Internal server error',
       timestamp: Date.now()
@@ -152,4 +152,4 @@ router.get('/:hash', async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+}

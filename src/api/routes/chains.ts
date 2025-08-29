@@ -1,12 +1,12 @@
-import { Router, Request, Response } from 'express';
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { DatabaseConfig } from '../../config/database';
 import { ChainPairStats } from '../../models/transaction';
 import { ApiResponse } from '../../models/api';
 import { logger } from '../../utils/logger';
 
-const router = Router();
+async function chainsRoutes(fastify: FastifyInstance) {
 
-router.get('/pairs', async (req: Request, res: Response) => {
+  fastify.get('/pairs', async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     // TODO: Implement chain pairs statistics
     // This endpoint should:
@@ -59,7 +59,7 @@ router.get('/pairs', async (req: Request, res: Response) => {
       }
     ];
 
-    res.json({
+    reply.send({
       success: true,
       data: mockChainPairs,
       timestamp: Date.now()
@@ -67,7 +67,7 @@ router.get('/pairs', async (req: Request, res: Response) => {
 
   } catch (error) {
     logger.error('Failed to get chain pairs:', error);
-    res.status(500).json({
+    reply.status(500).send({
       success: false,
       error: 'Internal server error',
       timestamp: Date.now()
@@ -75,7 +75,7 @@ router.get('/pairs', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/performance', async (req: Request, res: Response) => {
+  fastify.get('/performance', async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     // TODO: Implement chain performance metrics
     // This endpoint should:
@@ -119,7 +119,7 @@ router.get('/performance', async (req: Request, res: Response) => {
       }
     };
 
-    res.json({
+    reply.send({
       success: true,
       data: mockPerformance,
       timestamp: Date.now()
@@ -127,7 +127,7 @@ router.get('/performance', async (req: Request, res: Response) => {
 
   } catch (error) {
     logger.error('Failed to get chain performance:', error);
-    res.status(500).json({
+    reply.status(500).send({
       success: false,
       error: 'Internal server error',
       timestamp: Date.now()
@@ -135,4 +135,6 @@ router.get('/performance', async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+}
+
+export default chainsRoutes;

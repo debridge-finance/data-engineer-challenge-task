@@ -1,11 +1,9 @@
-import { Router, Request, Response } from 'express';
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { DatabaseConfig } from '../../config/database';
 import { TopTokensQuery, ApiResponse } from '../../models/api';
 import { TokenVolume } from '../../models/transaction';
 import { logger } from '../../utils/logger';
 import Joi from 'joi';
-
-const router = Router();
 
 const topTokensSchema = Joi.object({
   metric: Joi.string().valid('volume', 'count', 'avgAmount').default('volume'),
@@ -14,11 +12,12 @@ const topTokensSchema = Joi.object({
   chains: Joi.array().items(Joi.string()).optional()
 });
 
-router.get('/top', async (req: Request, res: Response) => {
+export default async function tokensRoutes(fastify: FastifyInstance) {
+  fastify.get('/top', async (request: FastifyRequest, reply: FastifyReply) => {
   try {
-    const { error, value } = topTokensSchema.validate(req.query);
+    const { error, value } = topTokensSchema.validate(request.query);
     if (error) {
-      return res.status(400).json({
+      return reply.status(400).send({
         success: false,
         error: error.details[0].message,
         timestamp: Date.now()
@@ -76,7 +75,7 @@ router.get('/top', async (req: Request, res: Response) => {
       }
     ];
 
-    res.json({
+    reply.send({
       success: true,
       data: mockTokens,
       timestamp: Date.now()
@@ -84,7 +83,7 @@ router.get('/top', async (req: Request, res: Response) => {
 
   } catch (error) {
     logger.error('Failed to get top tokens:', error);
-    res.status(500).json({
+    reply.status(500).send({
       success: false,
       error: 'Internal server error',
       timestamp: Date.now()
@@ -92,10 +91,10 @@ router.get('/top', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/:token/stats', async (req: Request, res: Response) => {
+  fastify.get('/:token/stats', async (request: FastifyRequest<{Params: {token: string}}>, reply: FastifyReply) => {
   try {
-    const { token } = req.params;
-    const period = req.query.period as string || '24h';
+    const { token } = request.params;
+    const period = (request.query as any).period as string || '24h';
     
     // TODO: Implement individual token statistics
     // This endpoint should:
@@ -128,20 +127,19 @@ router.get('/:token/stats', async (req: Request, res: Response) => {
       }
     };
 
-    res.json({
+    reply.send({
       success: true,
       data: mockStats,
       timestamp: Date.now()
     });
 
   } catch (error) {
-    logger.error(`Failed to get stats for token ${req.params.token}:`, error);
-    res.status(500).json({
+    logger.error(`Failed to get stats for token ${request.params.token}:`, error);
+    reply.status(500).send({
       success: false,
       error: 'Internal server error',
       timestamp: Date.now()
     });
   }
-});
-
-export default router;
+  });
+}

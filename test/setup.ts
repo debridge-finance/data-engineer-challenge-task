@@ -4,24 +4,16 @@ import { DatabaseConfig } from '../src/config/database';
 let mongoServer: MongoMemoryServer;
 
 export async function setupTestDatabase() {
-  // Start in-memory MongoDB
-  mongoServer = await MongoMemoryServer.create({
-    instance: {
-      port: 27018, // Use different port to avoid conflicts
-    },
-  });
+  // Start in-memory MongoDB with random port to avoid conflicts
+  mongoServer = await MongoMemoryServer.create();
   
   const mongoUri = mongoServer.getUri();
   process.env.MONGODB_URI = mongoUri;
-  
-  // Initialize database connections
-  await DatabaseConfig.connectMongoDB();
+  process.env.NODE_ENV = 'test';
   
   // Mock ClickHouse for tests since we don't need real ClickHouse in unit tests
   process.env.CLICKHOUSE_HOST = 'localhost';
   process.env.CLICKHOUSE_PORT = '8123';
-  
-  process.env.NODE_ENV = 'test';
   
   // Connect to test databases
   await DatabaseConfig.connectMongoDB();
