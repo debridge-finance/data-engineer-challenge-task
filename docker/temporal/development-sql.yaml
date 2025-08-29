@@ -1,0 +1,16 @@
+# Temporal dynamic configuration for development
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: true
+    constraints: {}
+
+system.enableEagerWorkflowStart:
+  - value: true
+    constraints: {}
+
+limit.maxIDLength:
+  - value: 1000
+    constraints: {}
+
+frontend.enableUpdateWorkflowExecution:
+  - value: true
+    constraints: {}
