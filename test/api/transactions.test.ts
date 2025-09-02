@@ -106,8 +106,7 @@ describe('Transactions API', () => {
     });
 
     it('should return actual transaction data when present', async () => {
-      // TODO: Candidates should implement this test
-      // Insert test transactions and verify they are returned correctly
+      throw new Error('TODO: Implement transaction data retrieval tests');
       const db = DatabaseConfig.getMongoDb();
       const testTx = createTestTransaction({
         status: 'completed',
@@ -120,9 +119,7 @@ describe('Transactions API', () => {
         _id: new ObjectId()
       });
 
-      // Test that the transaction is returned in the API response
-      // Verify filtering works correctly
-      // Check pagination calculations
+      throw new Error('TODO: Implement transaction existence tests');
     });
   });
 

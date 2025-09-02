@@ -1,6 +1,11 @@
 # DeBridge Finance - Data Engineer Challenge
 
-## 🌉 Overview
+[![CI/CD Pipeline](https://github.com/debridge-finance/data-enginner-challenge-task/actions/workflows/ci.yml/badge.svg)](https://github.com/debridge-finance/data-enginner-challenge-task/actions/workflows/ci.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.1-blue.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A comprehensive ETL pipeline for cross-chain transaction processing using modern technologies.
 
 Welcome to the DeBridge Finance Data Engineer challenge! This project simulates a real-world ETL pipeline for processing cross-chain transaction data. You'll be working with a modern tech stack to build a scalable data processing system.
 
@@ -334,7 +339,7 @@ docker compose restart temporal
 **Database connection errors**:
 ```bash
 # Verify database initialization
-npm run init-db
+pnpm run init-db
 
 # Check database connectivity
 docker exec -it debridge-mongodb mongosh --eval "db.adminCommand('ping')"
@@ -342,7 +347,7 @@ docker exec -it debridge-mongodb mongosh --eval "db.adminCommand('ping')"
 
 **Temporal workflow issues**:
 - Check Temporal UI at http://localhost:8080
-- Verify worker is running: `npm run worker`
+- Verify worker is running: `pnpm run worker`
 - Check activity timeouts and retry policies
 
 ### Performance Tips
@@ -367,6 +372,39 @@ During the interview:
 3. **Focus on key areas** - Prioritize high-impact implementations
 4. **Don't get stuck** - Move on if something is blocking you
 
+## 🎯 Challenge Graduation Criteria
+
+Your performance will be evaluated based on the following criteria:
+
+### 📊 **Satisfied** (Minimum Passing Grade)
+- **One important task completed correctly**
+- Basic functionality working (e.g., one API endpoint or one activity)
+- Code compiles and runs without critical errors
+- Shows understanding of the tech stack
+
+### 🎉 **Good** (Above Average Performance)
+- **Some important tasks completed correctly**
+- **Their tests are fixed and passing**
+- Multiple components working together
+- Proper error handling in implemented areas
+- Clean, readable code structure
+
+### 🌟 **Awesome** (Excellent Performance)
+- **All tests are "green" (passing)**
+- **Service works as expected end-to-end**
+- Complete ETL pipeline functional
+- All API endpoints working correctly
+- Proper integration between all components
+- Demonstrates strong technical skills
+
+### 🚀 **EXTRA** (Outstanding Performance)
+- **Code was improved and refactored**
+- **Covered with additional test cases**
+- Performance optimizations implemented
+- Enhanced error handling and monitoring
+- Additional features or improvements beyond requirements
+- Production-ready code quality
+
 ## 🏁 Submission
 
 When you're ready to present:
@@ -375,6 +413,17 @@ When you're ready to present:
 2. **Explain your implementation** - Walk through key code sections
 3. **Discuss trade-offs** - Explain your design decisions
 4. **Identify improvements** - What would you do with more time?
+
+### 🧪 Running Tests
+```bash
+# Run all tests to check your progress
+pnpm test
+
+# Run specific test suites
+pnpm test test/activities/
+pnpm test test/api/
+pnpm test test/workflows/
+```
 
 ---
 

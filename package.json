@@ -9,10 +9,18 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "worker": "ts-node-dev --respawn --transpile-only src/worker.ts",
     "test": "jest",
-    "lint": "eslint src/**/*.ts",
-    "init-db": "ts-node scripts/init-databases.ts",
+    "test:integration": "jest --testPathPattern=api",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.ts test/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts test/**/*.ts --fix",
+    "type-check": "tsc --noEmit",
+    "security:check": "npm audit --audit-level moderate",
+    "init:databases": "ts-node scripts/init-databases.ts",
     "load-mock-data": "ts-node scripts/load-mock-data.ts",
-    "setup": "npm run init-db && npm run load-mock-data"
+    "setup": "npm run init:databases && npm run load-mock-data",
+    "ci": "npm run lint && npm run type-check && npm run build && npm run test",
+    "clean": "rm -rf dist coverage"
   },
   "keywords": [
     "debridge",

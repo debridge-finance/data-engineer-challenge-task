@@ -135,6 +135,8 @@ describe('Stats API', () => {
       // TODO: Candidates should implement this test
       // Insert transactions with various processing times
       // Verify percentile calculations are correct
+      
+      throw new Error('TODO: Implement percentile calculation tests');
     });
   });
 });

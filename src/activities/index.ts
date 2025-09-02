@@ -33,7 +33,8 @@ export async function fetchBlockchainData(transactionId: string): Promise<RawTra
   }
 }
 
-export async function enrichWithPrices(rawTransaction: RawTransaction): Promise<EnrichedTransaction> {
+export async function enrichWithPrices(rawTransaction: RawTransaction): Promise<EnrichedTransaction | null> {
+   
   // TODO: Implement price enrichment logic
   // This activity should:
   // 1. Fetch current token prices from price APIs
@@ -54,19 +55,8 @@ export async function enrichWithPrices(rawTransaction: RawTransaction): Promise<
     // - CoinMarketCap API
     // - DeFi protocols for real-time prices
     // - Implement price caching strategy
-    
-    const amountUSD = parseFloat(rawTransaction.amount) * tokenPrice;
-    
-    const enrichedTransaction: EnrichedTransaction = {
-      ...rawTransaction,
-      amountUSD,
-      tokenPrice,
-      status: 'completed', // TODO: Implement actual status detection
-      enrichedAt: Date.now(),
-      retryCount: 0
-    };
-    
-    return enrichedTransaction;
+  
+    return null;
   } catch (error) {
     logger.error(`Failed to enrich transaction ${rawTransaction.hash}:`, error);
     throw error;
@@ -94,15 +84,7 @@ export async function saveToMongoDB(transaction: EnrichedTransaction): Promise<v
     // - Updating existing records vs creating new ones
     // - Proper error handling for constraint violations
     // - Batch operations for better performance
-    
-    await collection.insertOne({
-      ...transaction,
-      _id: new ObjectId(), // Use ObjectId as unique identifier
-      hash: transaction.hash, // Store hash as separate field
-      createdAt: new Date(),
-      updatedAt: new Date()
-    });
-    
+        
     logger.info(`Successfully saved transaction ${transaction.hash} to MongoDB`);
   } catch (error) {
     logger.error(`Failed to save transaction ${transaction.hash} to MongoDB:`, error);
@@ -142,13 +124,7 @@ export async function aggregateToClickHouse(transaction: EnrichedTransaction): P
     // - Proper data types and compression
     // - Partitioning strategy
     // - Materialized views for common queries
-    
-    await clickhouse.insert({
-      table: 'transaction_metrics',
-      values: [metrics],
-      format: 'JSONEachRow'
-    });
-    
+
     logger.info(`Successfully aggregated transaction ${transaction.hash} to ClickHouse`);
   } catch (error) {
     logger.error(`Failed to aggregate transaction ${transaction.hash} to ClickHouse:`, error);

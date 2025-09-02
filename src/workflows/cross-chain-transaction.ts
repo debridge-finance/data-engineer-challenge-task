@@ -39,7 +39,11 @@ export async function processCrossChainTransaction(transactionId: string): Promi
     
     // Step 3: Enrich with prices
     // TODO: Implement price enrichment logic
-    const enrichedTransaction: EnrichedTransaction = await enrichWithPrices(rawTransaction);
+    const enrichedTransaction: EnrichedTransaction | null = await enrichWithPrices(rawTransaction);
+    
+    if (!enrichedTransaction) {
+      throw new Error('Failed to enrich transaction');
+    }
     
     // Step 4: Save to MongoDB
     // TODO: Implement MongoDB save operation

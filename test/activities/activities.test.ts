@@ -66,6 +66,8 @@ describe('Temporal Activities', () => {
     it('should handle network timeouts', async () => {
       // TODO: Test network failure scenarios
       // Verify retry logic and timeout handling
+      
+      throw new Error('TODO: Implement network timeout handling tests');
     });
   });
 
@@ -92,11 +94,15 @@ describe('Temporal Activities', () => {
       // TODO: Candidates should implement hash format validation
       // Test various invalid hash formats
       // Verify chain-specific hash validation
+      
+      throw new Error('TODO: Implement hash format validation tests');
     });
 
     it('should validate token-chain compatibility', async () => {
       // TODO: Test that tokens are supported on specified chains
       // Verify cross-chain token mapping
+      
+      throw new Error('TODO: Implement token-chain compatibility validation');
     });
   });
 
@@ -107,22 +113,26 @@ describe('Temporal Activities', () => {
       const enrichedTx = await enrichWithPrices(rawTx);
       
       expect(enrichedTx).toMatchObject(rawTx);
-      expect(enrichedTx.amountUSD).toBeGreaterThan(0);
-      expect(enrichedTx.tokenPrice).toBeGreaterThan(0);
-      expect(enrichedTx.status).toBeDefined();
-      expect(enrichedTx.enrichedAt).toBeDefined();
+      expect(enrichedTx?.amountUSD).toBeGreaterThan(0);
+      expect(enrichedTx?.tokenPrice).toBeGreaterThan(0);
+      expect(enrichedTx?.status).toBeDefined();
+      expect(enrichedTx?.enrichedAt).toBeDefined();
     });
 
     it('should handle price service failures', async () => {
       // TODO: Test price service error scenarios
       // Verify fallback mechanisms
       // Test with unsupported tokens
+      
+      throw new Error('TODO: Implement price service failure handling tests');
     });
 
     it('should calculate USD amounts correctly', async () => {
       // TODO: Verify USD amount calculations
       // Test with various token amounts and prices
       // Check precision and rounding
+      
+      throw new Error('TODO: Implement USD amount calculation tests');
     });
   });
 
@@ -151,11 +161,15 @@ describe('Temporal Activities', () => {
       // TODO: Test upsert logic for duplicate transactions
       // Verify that duplicates are handled gracefully
       // Test update vs insert behavior
+      
+      throw new Error('TODO: Implement duplicate transaction handling tests');
     });
 
     it('should handle database connection failures', async () => {
       // TODO: Test database error scenarios
       // Verify error handling and retry logic
+      
+      throw new Error('TODO: Implement database error handling tests');
     });
   });
 
@@ -183,12 +197,16 @@ describe('Temporal Activities', () => {
     it('should handle ClickHouse connection failures', async () => {
       // TODO: Test ClickHouse error scenarios
       // Verify retry logic and error handling
+      
+      throw new Error('TODO: Implement ClickHouse error handling tests');
     });
 
     it('should batch multiple transactions efficiently', async () => {
       // TODO: Test batch insertion performance
       // Verify optimal batch sizes
       // Test memory usage with large batches
+      
+      throw new Error('TODO: Implement batch processing tests');
     });
   });
 
@@ -209,6 +227,8 @@ describe('Temporal Activities', () => {
       // TODO: Test integration with monitoring/alerting
       // Verify metrics collection
       // Test webhook notifications
+      
+      throw new Error('TODO: Implement monitoring integration tests');
     });
   });
 });

@@ -66,24 +66,32 @@ describe('Cross-Chain Transaction Workflow', () => {
       // This test should verify that:
       // 1. Network failures are properly handled
       // 2. Retry logic works as expected
-      // 3. Appropriate error messages are generated
+      // 3. Appropriate error messages are returned
       // 4. Failed transactions are marked correctly
+      
+      throw new Error('TODO: Implement blockchain data fetch failure tests');
     });
 
     it('should handle price service failures gracefully', async () => {
       // TODO: Test price service error scenarios
       // Verify fallback mechanisms and retry policies
+      
+      throw new Error('TODO: Implement price service failure tests');
     });
 
     it('should validate transaction data correctly', async () => {
       // TODO: Test validation logic
       // Verify that invalid transactions are rejected
       // Check that validation errors are properly reported
+      
+      throw new Error('TODO: Implement transaction validation tests');
     });
 
     it('should handle database save failures', async () => {
       // TODO: Test database error scenarios
       // Verify transaction rollback and error handling
+      
+      throw new Error('TODO: Implement database save failure tests');
     });
   });
 
@@ -134,6 +142,8 @@ describe('Cross-Chain Transaction Workflow', () => {
       // TODO: Test scenarios where some transactions fail
       // Verify that successful transactions are still processed
       // Check error reporting and retry logic
+      
+      throw new Error('TODO: Implement partial batch failure tests');
     });
   });
 });
